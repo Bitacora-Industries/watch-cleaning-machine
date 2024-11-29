@@ -1,6 +1,7 @@
 ## Setting Up the `data/` Directory
 Create a `wifi_credentials.txt` file in the `data/` directory with the following format:
-``
+
+```
 ssid=YourWiFiSSID
 password=YourWiFiPassword
-``
+```

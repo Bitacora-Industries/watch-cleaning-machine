@@ -28,7 +28,7 @@ void printLog(LogLevel level, const char *format, va_list args) {
 
   char buffer[LOG_BUFFER_SIZE];
   vsnprintf(buffer, LOG_BUFFER_SIZE, format, args); // Format the string
-  Serial.printf("[%s][%lu ms] %s\n", levelStr, millis(), buffer);
+  Serial.printf("[%s] [%lu ms] %s\n", levelStr, millis(), buffer);
 }
 
 // Implementations for each log level

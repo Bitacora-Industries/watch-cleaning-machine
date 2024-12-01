@@ -1,17 +1,18 @@
-#include <WiFi.h>
-#include <SPIFFS.h>
 #include "wifi_manager.h"
 #include "config.h"
+#include "logger.h"
+#include <SPIFFS.h>
+#include <WiFi.h>
 
 void readWiFiCredentials(String &ssid, String &password) {
   if (!SPIFFS.begin(true)) {
-    Serial.println("[ERROR] Failed to mount SPIFFS!");
+    logError("Failed to mount SPIFFS!");
     return;
   }
 
   File file = SPIFFS.open("/wifi_credentials.txt", "r");
   if (!file) {
-    Serial.println("[ERROR] Failed to open WiFi credentials file.");
+    logError("Failed to open WiFi credentials file.");
     return;
   }
 
@@ -33,22 +34,23 @@ void setupWiFi() {
   String ssid, password;
   readWiFiCredentials(ssid, password);
 
-  Serial.println("[INFO] Connecting to WiFi...");
+  logInfo("Connecting to WiFi...");
 
   WiFi.begin(ssid.c_str(), password.c_str());
 
   unsigned long startAttemptTime = millis();
 
   // Wait for connection or timeout
-  while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < WIFI_TIMEOUT_MS) {
+  while (WiFi.status() != WL_CONNECTED &&
+         millis() - startAttemptTime < WIFI_TIMEOUT_MS) {
     Serial.print(".");
-    delay(500);  // Delay to avoid spamming logs
+    delay(500); // Delay to avoid spamming logs
   }
 
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.println("\n[INFO] Connected to WiFi!");
-    Serial.printf("[INFO] IP Address: %s\n", WiFi.localIP().toString().c_str());
+    logInfo("Connected to WiFi!");
+    logInfo("IP Address: %s", WiFi.localIP().toString().c_str());
   } else {
-    Serial.println("\n[ERROR] Failed to connect to WiFi.");
+    logError("Failed to connect to WiFi.");
   }
 }

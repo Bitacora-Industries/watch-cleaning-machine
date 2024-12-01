@@ -1,14 +1,15 @@
-#include <Arduino.h>
-#include "wifi_manager.h"
-#include "web_server.h"
-#include "mdns_manager.h"
 #include "config.h"
+#include "logger.h"
+#include "mdns_manager.h"
+#include "web_server/web_server.h"
+#include "wifi_manager.h"
+#include <Arduino.h>
 
 // Function to log temperature with structured format
 void logTemperature() {
-  float temperature = temperatureRead();  // Get internal temperature reading
-  unsigned long timestamp = millis();     // Get timestamp in milliseconds
-  Serial.printf("[INFO][%lu ms] Temperature: %.2f°C\n", timestamp, temperature);
+  float temperature = temperatureRead(); // Get internal temperature reading
+  unsigned long timestamp = millis();    // Get timestamp in milliseconds
+  logInfo("Temperature: %.2f°C", timestamp, temperature);
 }
 
 void setup() {
@@ -27,5 +28,5 @@ void setup() {
 void loop() {
   // Log temperature every second
   logTemperature();
-  delay(1000);  // Delay for 1 second
+  delay(1000); // Delay for 1 second
 }

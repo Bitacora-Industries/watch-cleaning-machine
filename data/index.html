@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Cleaning Machine</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Watch Cleaning Machine</h1>
+  <div class="button-container">
+    <button id="cleaning-button" class="button">Cleaning</button>
+    <button id="rinsing-button" class="button">Rinsing</button>
+    <button id="drying-button" class="button">Drying</button>
+    <button id="emergency-button" class="button emergency">Emergency Stop</button>
+  </div>
+  <script>
+    const cleaningButton = document.getElementById("cleaning-button");
+    const rinsingButton = document.getElementById("rinsing-button");
+    const dryingButton = document.getElementById("drying-button");
+    const emergencyButton = document.getElementById("emergency-button");
+
+    // Event listeners for buttons
+    cleaningButton.addEventListener("click", async () => {
+      await fetch("/cleaning", { method: "POST" });
+    });
+
+    rinsingButton.addEventListener("click", async () => {
+      await fetch("/rinsing", { method: "POST" });
+    });
+
+    dryingButton.addEventListener("click", async () => {
+      await fetch("/drying", { method: "POST" });
+    });
+
+    emergencyButton.addEventListener("click", async () => {
+      await fetch("/emergency-stop", { method: "POST" });
+    });
+  </script>
+</body>
+</html>

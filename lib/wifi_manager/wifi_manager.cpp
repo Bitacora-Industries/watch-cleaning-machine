@@ -5,11 +5,6 @@
 #include <WiFi.h>
 
 void readWiFiCredentials(String &ssid, String &password) {
-  if (!SPIFFS.begin(true)) {
-    logError("Failed to mount SPIFFS!");
-    return;
-  }
-
   File file = SPIFFS.open("/wifi_credentials.txt", "r");
   if (!file) {
     logError("Failed to open WiFi credentials file.");
